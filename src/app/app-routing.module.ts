@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ProductosComponent } from './productos/productos.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'folder/Home',
     pathMatch: 'full'
   },
   {
+    path: 'productos',
+    component: ProductosComponent
+  },
+  {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    loadChildren: () => import('./index/folder.module').then( m => m.FolderPageModule)
+  },
+  
+
 ];
 
 @NgModule({

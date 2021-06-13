@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Generar Catalogo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-button color="success" (click)="GenerarCatalogo()">Generar Catalogo</ion-button>
+    <ion-button color="success"> Imagen</ion-button>
+    <ion-button color="success" (click)="cargaProductos()">Ver</ion-button>
+
+    <!-- <img [src]="imageToShow" alt="" srcset="" [{ngModal}] = ""> -->
+    <table>
+      <tr *ngFor="let item of  daTatable">
+        <td>
+          {{item.id}}
+        </td>
+        <td>
+                {{item.name}}
+      </td>
+      <td>
+        {{item.description}}
+</td>
+<td>
+  {{item.price}}
+</td>
+
+        </tr>
+    </table>
+  </div>
+</ion-content>
