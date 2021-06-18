@@ -10,6 +10,18 @@ FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
 
+create table LOGIN(
+ID INT(11) not null auto_increment, 
+ID_USUARIO INT not null,
+CORREO VARCHAR(200) not null,
+CONTRASENA VARCHAR(10) not null,
+RECUPERAR_CONTRASENA INT,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_USUARIO) references USUARIO(ID)
+)
+
 create table UBICACION(
 ID INT(11) not null auto_increment,
 NOMBRE VARCHAR(200) not null,
@@ -31,6 +43,20 @@ FECHA_ACTUALIZACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID),
 foreign key (ID_UBICACION) references UBICACION(ID)
+)
+
+CREATE table PRODUCTOS_MARGEN_GANANCIAS(
+ID INT(11) not null auto_increment,
+ID_PRODUCTO INT not null,
+MARGEN1 INT,
+MARGEN2 INT,
+MARGEN3 INT,
+MARGEN4 INT,
+FECHA_CREACION DATETIME,
+FECHA_ACTUALIZACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_PRODUCTO) references PRODUCTOS(ID)
 )
 
 create table ORIGEN(
