@@ -10,7 +10,6 @@ FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
 
-
 create table UBICACION(
 ID INT(11) not null auto_increment,
 NOMBRE VARCHAR(200) not null,
@@ -20,42 +19,27 @@ FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
 
-create table STOCK(
-ID INT(11) not null auto_increment,
-CANTIDAD INT(11) not null,
-FECHA_ACTUALIZACION DATETIME,
-primary key (ID)
-)
-
-
-create table PRODUCTOS(
+CREATE table PRODUCTOS(
 ID INT(11) not null auto_increment,
 NOMBRE VARCHAR(200) not null,
 PRECIO DOUBLE,
 ID_UBICACION INT(11),
-ID_STOCK INT(11),
+STOCK INT(11),
 ESTADO BOOLEAN,
 FECHA_CREACION DATETIME,
+FECHA_ACTUALIZACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID),
-foreign key (ID_UBICACION) references UBICACION(ID),
-foreign key (ID_STOCK) references STOCK(ID)
+foreign key (ID_UBICACION) references UBICACION(ID)
 )
 
-
-create table CLIENTE(
+create table ORIGEN(
 ID INT(11) not null auto_increment,
-NOMBRE_COMPLETO VARCHAR(200) not null,
-ID_DIRECCION INT(11) not null,
-TELEFONO VARCHAR(12),
-CORREO VARCHAR(200),
-ESTADO BOOLEAN not null,
-FECHA_CREACION DATETIME,
-FECHA_ELIMINACION DATETIME,
-primary key (ID),
-foreign key (ID_DIRECCION) references DIRECCIONES(ID)
+NOMBRE_ORIGEN VARCHAR(200) not null,
+primary key (ID)
 )
-alter table DIRECCIONES(
+
+CREATE table DIRECCIONES(
 ID INT(11) not null auto_increment,
 REGION VARCHAR(200) not null,
 COMUNA VARCHAR(200) not null,
@@ -70,27 +54,18 @@ FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
 
-create table PEDIDO(
+create table CLIENTE(
 ID INT(11) not null auto_increment,
-ID_CLIENTE INT(11) not null,
-ID_PEDIDO_LISTA INT(11) not null,
+NOMBRE_COMPLETO VARCHAR(200) not null,
+ID_DIRECCION INT(11) not null,
+TELEFONO VARCHAR(12),
+CORREO VARCHAR(200),
 ESTADO BOOLEAN not null,
 FECHA_CREACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID),
-foreign key (ID_CLIENTE) references CLIENTE(ID),
-foreign key (ID_PEDIDO_LISTA) references PEDIDO_LISTA(ID)
+foreign key (ID_DIRECCION) references DIRECCIONES(ID)
 )
-DROP table PEDIDO_LISTA
-
-CREATE table PEDIDO_LISTA(
-ID INT(11) not null auto_increment,
-ID_PRODUCTO INT(11) not null,
-CANTIDAD INT(11),
-primary key (ID),
-foreign key (ID_PRODUCTO) references PRODUCTO(ID)
-)
-
 create table ETAPA(
 ID INT(11) not null auto_increment,
 NOMBRE_ETAPA VARCHAR(200) not null,
@@ -99,22 +74,34 @@ FECHA_CREACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
-
-
-create table ETAPA_PEDIDO(
+create table PEDIDO_ENCABEZADO(
 ID INT(11) not null auto_increment,
-ID_PEDIDO INT(11) not null,
 ID_ETAPA INT(11) not null,
 ID_USUARIO INT(11) not null,
+ID_ORIGEN INT(11) not null,
+ID_CLIENTE INT(11) not null,
 ESTADO BOOLEAN not null,
 FECHA_CREACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID),
-foreign key (ID_PEDIDO) references PEDIDO(ID),
+foreign key (ID_CLIENTE) references CLIENTE(ID),
 foreign key (ID_ETAPA) references ETAPA(ID),
-foreign key (ID_USUARIO) references USUARIO(ID)
+foreign key (ID_USUARIO) references USUARIO(ID),
+foreign key (ID_ORIGEN) references ORIGEN(ID)
 )
 
+CREATE table PEDIDO_DETALLE(
+ID INT(11) not null auto_increment,
+ID_PEDIDO_ENCABEZADO INT(11) not null,
+ID_PRODUCTO INT(11) not null,
+CANTIDAD INT(11),
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_PEDIDO_ENCABEZADO) references PEDIDO_ENCABEZADO(ID),
+foreign key (ID_PRODUCTO) references PRODUCTOS(ID)
+)
 
 create table ZONAS(
 ID INT(11) not null auto_increment,
@@ -124,3 +111,19 @@ FECHA_CREACION DATETIME,
 FECHA_ELIMINACION DATETIME,
 primary key (ID)
 )
+
+
+drop table ETAPA;
+drop table usuario; 
+drop table etapa_pedido ;
+drop table pedido;
+drop table cliente; 
+drop table direcciones ;
+drop table pedido_lista; 
+drop table pedido_detalle ; 
+
+drop table zonas ;
+drop table productos ;
+drop table ubicacion; 
+drop table stock 
+drop table origen 
