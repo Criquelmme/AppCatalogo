@@ -1,0 +1,126 @@
+create table USUARIO(
+ID INT(11) not null auto_increment, 
+NOMBRE VARCHAR(200) not null,
+APELLIDOS VARCHAR(200) not null,
+CORREO VARCHAR(100) not null,
+TELEFONO VARCHAR(12) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID)
+)
+
+
+create table UBICACION(
+ID INT(11) not null auto_increment,
+NOMBRE VARCHAR(200) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID)
+)
+
+create table STOCK(
+ID INT(11) not null auto_increment,
+CANTIDAD INT(11) not null,
+FECHA_ACTUALIZACION DATETIME,
+primary key (ID)
+)
+
+
+create table PRODUCTOS(
+ID INT(11) not null auto_increment,
+NOMBRE VARCHAR(200) not null,
+PRECIO DOUBLE,
+ID_UBICACION INT(11),
+ID_STOCK INT(11),
+ESTADO BOOLEAN,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_UBICACION) references UBICACION(ID),
+foreign key (ID_STOCK) references STOCK(ID)
+)
+
+
+create table CLIENTE(
+ID INT(11) not null auto_increment,
+NOMBRE_COMPLETO VARCHAR(200) not null,
+ID_DIRECCION INT(11) not null,
+TELEFONO VARCHAR(12),
+CORREO VARCHAR(200),
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_DIRECCION) references DIRECCIONES(ID)
+)
+alter table DIRECCIONES(
+ID INT(11) not null auto_increment,
+REGION VARCHAR(200) not null,
+COMUNA VARCHAR(200) not null,
+ID_ZONA INT(22),
+DIRECCION VARCHAR(200),
+REFERENCIAS VARCHAR(200),
+LATITUD DOUBLE,
+LONGITUD DOUBLE,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID)
+)
+
+create table PEDIDO(
+ID INT(11) not null auto_increment,
+ID_CLIENTE INT(11) not null,
+ID_PEDIDO_LISTA INT(11) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_CLIENTE) references CLIENTE(ID),
+foreign key (ID_PEDIDO_LISTA) references PEDIDO_LISTA(ID)
+)
+DROP table PEDIDO_LISTA
+
+CREATE table PEDIDO_LISTA(
+ID INT(11) not null auto_increment,
+ID_PRODUCTO INT(11) not null,
+CANTIDAD INT(11),
+primary key (ID),
+foreign key (ID_PRODUCTO) references PRODUCTO(ID)
+)
+
+create table ETAPA(
+ID INT(11) not null auto_increment,
+NOMBRE_ETAPA VARCHAR(200) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID)
+)
+
+
+create table ETAPA_PEDIDO(
+ID INT(11) not null auto_increment,
+ID_PEDIDO INT(11) not null,
+ID_ETAPA INT(11) not null,
+ID_USUARIO INT(11) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID),
+foreign key (ID_PEDIDO) references PEDIDO(ID),
+foreign key (ID_ETAPA) references ETAPA(ID),
+foreign key (ID_USUARIO) references USUARIO(ID)
+)
+
+
+create table ZONAS(
+ID INT(11) not null auto_increment,
+NOMBRE_ZONA VARCHAR(200) not null,
+ESTADO BOOLEAN not null,
+FECHA_CREACION DATETIME,
+FECHA_ELIMINACION DATETIME,
+primary key (ID)
+)
